@@ -13,9 +13,10 @@ The friend finder app utilizes express to set up a server and return friend resu
  Please visit the heroku deployed link to the site:
 `https://fathomless-journey-45031.herokuapp.com/`
 
-**Please fill out the survey entirely and provide a link to an image of yourself**
+---
 
-**The app will then use your survey results to match you to the survey taker who most closely responded as you did**
+<h3>Please fill out the survey entirely and provide a link to an image of yourself**
+**The app will then use your survey results to match you to the survey taker who most closely responded as you did**</h3>
 ---
 <h2>Technologies Used</h2>
 `jQuery, Bootstrap, Express`
