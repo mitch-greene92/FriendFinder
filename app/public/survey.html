@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Friend Finder app which matches you with similar friends">
+  <meta name="keywords" content="friend, finder, friendship, matching, survey">
+  <meta name="author" content="Mitch Greene">
+  <title>Friend Finder Questions</title>
+  <!-- link to jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<!--About You-->
+<body> 
+<div class = "container">
+	 <div class="page-header">
+       <h1><span class="glyphicon glyphicon-list-alt"></span>Survey Questions</h1>
+      </div>
+      <br>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong><i>About You</i></strong></h3>
+          <br>
+        </div>
+        <!--Name Requirement-->
+        <div class="panel-body">
+          <h4>Name (Required)</h4>
+          <div class="input-group">
+            <input id = "formName" class="form-control" type="text" name="name">
+          </div>  
+          <br>
+          <!--Image Requirement-->
+          <h4>Link to a Photo Image (Required)</h4>
+          <div class="input-group">
+            <input id = "formImage" class="form-control" type="text" name="name">
+          </div>
+        </div>
+      </div>
+
+      <!--Questions-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <br>
+          <h3 class="panel-title"><strong><i>Questionaire</i></strong></h3>
+        </div>
+        <div class="panel-body">
+        <br>
+          <h4><strong>Question 1</strong></h4>
+          <h5>I enjoy being outside more than inside</h5>
+          <select data-placeholder="" class="select" id="Q1">
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2 (Slightly Disagree)</option>
+            <option value="3">3 (Neither Agree nor Disagree)</option>
+            <option value="4">4 (Slightly Agree)</option>
+            <option value="5">5 (Strongly Agree)</option>
+          </select>
+         
+          <h4><strong>Question 2</strong></h4>
+          <h5>I tend to prefer working in groups than alone</h5>
+          <select data-placeholder="" class="select" id="Q2">
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2 (Slightly Disagree)</option>
+            <option value="3">3 (Neither Agree nor Disagree)</option>
+            <option value="4">4 (Slightly Agree)</option>
+            <option value="5">5 (Strongly Agree)</option>
+          </select>
+
+          <h4><strong>Question 3</strong></h4>
+          <h5>I prefer to cook at home rather than go out to a restaurant.</h5>
+          <select data-placeholder="" class="select" id="Q3">
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2 (Slightly Disagree)</option>
+            <option value="3">3 (Neither Agree nor Disagree)</option>
+            <option value="4">4 (Slightly Agree)</option>
+            <option value="5">5 (Strongly Agree)</option>
+          </select>
+
+          <h4><strong>Question 4</strong></h4>
+          <h5>I'd rather workout than watch netflix</h5>
+          <select data-placeholder="" class="select" id="Q4">
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2 (Slightly Disagree)</option>
+            <option value="3">3 (Neither Agree nor Disagree)</option>
+            <option value="4">4 (Slightly Agree)</option>
+            <option value="5">5 (Strongly Agree)</option>
+          </select>
+
+          <h4><strong>Question 5</strong></h4>
+          <h5>I tend to get anxious easily</h5>
+          <select data-placeholder="" class="select" id="Q5">
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2 (Slightly Disagree)</option>
+            <option value="3">3 (Neither Agree nor Disagree)</option>
+            <option value="4">4 (Slightly Agree)</option>
+            <option value="5">5 (Strongly Agree)</option>
+          </select>
+          <br>
+        </div>
+      </div>
+      <br>
+      <button id="submitButton" type="submit" class="btn btn-lg btn-primary btn-block"><h4>Submit Survey</h4></button> 
+      <br>
+      <footer class="footer">
+      <div class="container">
+        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/Mitchgreene92/FriendFinder">GitHub Repo</a></p>
+      </div>
+      </footer>
+</div>
+      <!--Modal which returns the best friend match-->
+      <div id="resultsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+               
+              <h2 class="modal-title"><strong>Your best friend match is: </strong></h2>
+            </div>
+
+            <div class="modal-body">
+               
+              <h2 id="matchName"></h2>
+              <img id="matchImg" src="" alt="Image Not Found" style="max-width: 350px;">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </>
+    </div>	
+
+    <script type="text/javascript">
+     
+    $(document).ready(function() {
+    $("#submitButton").on("click", function() {
+         
+        function newSurvey() {
+            
+            var allformsFilled = true;
+            $(".form-control").each(function() {
+                if ($(this).val() === ""){
+                    allformsFilled = false;
+                }
+            });
+            $(".select").each(function() {
+                if ($(this).val() === ""){
+                    allformsFilled = false;
+                }
+            });
+            return allformsFilled;
+        }
+         
+        if (newSurvey() == true) {
+             
+            var addFriend = {
+                name: $("#formName").val().trim(),
+                profilePic: $("#formImage").val().trim(),
+                scores: [
+                    $('#Q1').val(),
+                    $('#Q2').val(),
+                    $('#Q3').val(),
+                    $('#Q4').val(),
+                    $('#Q5').val(),
+                ]
+            };
+             
+            var thisURL = window.location.origin;
+             
+            $.post(thisURL + "/api/friends", addFriend, function(data) {
+                
+                $("#matchName").text(data.name);
+                $("#matchImg").attr("src", data.photo);
+                $("#resultsModal").modal("toggle");
+            });
+            
+            $('#formName').val("");
+            $('#formImage').val("");
+            $('#Q1').val("");
+            $('#Q2').val("");
+            $('#Q3').val("");
+            $('#Q4').val("");
+            $('#Q5').val("");
+           
+        } else {
+            alert("All fields must be filled in.")
+        }
+        
+    });
+});
+</script>
+</body>
+</html>
